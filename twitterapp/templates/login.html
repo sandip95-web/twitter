@@ -1,0 +1,33 @@
+{%extends 'base.html'%}
+
+{%block content%}
+{% if user.is_authenticated%}
+  <h1 class="text-light">You are already logged in!</h1>
+
+{% else %}
+<div class="col-md-6 offset-md-3 text-light">
+    <br>    
+    <h1>Login</h1>
+    <br>
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <i class="fa-solid fa-user-secret"></i>
+            <label for="exampleInputEmail1" class="form-label">Username</label>
+          <input type="text" class="form-control" name="username" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <i class="fa-solid fa-key"></i>
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">
+            <i class="fa-regular fa-paper-plane"></i>
+            Login
+        </button>
+      </form>
+
+</div>
+{%endif%}
+{%endblock%}

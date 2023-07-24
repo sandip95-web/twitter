@@ -1,0 +1,77 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border border-bottom-1 px-2 mx-2">
+  <div class="container-fluid">  
+  <a class="navbar-brand" href="{% url 'index' %}">
+      <i class="fa-brands fa-square-twitter"></i>
+        Twitter
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+       
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'profile_list' %}">
+            <i class="fa-regular fa-user" style="color: #d4ddec;"></i>
+            Profile List</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'profile' request.user.id %}">
+            <i class="fa-solid fa-address-card"></i>
+            Profile
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'logout'%}">
+            <i class="fa-solid fa-toggle-off"></i>
+            Log-out
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-magnifying-glass"></i> Search
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{%url 'search_user'%}"><i class="fa-solid fa-user"></i> Search User</a></li>
+            <li><a class="dropdown-item" href="{%url 'search_tweet'%}"><i class="fa-brands fa-twitter"></i> Search Tweet</a></li>
+          </ul>
+        </li>  
+        {%else%}
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'login'%}">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            Log-in
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'register'%}">
+            <i class="fa-regular fa-file-lines"></i>
+            Register
+          </a>
+        </li>
+        {%endif%}
+      </ul>
+      <!-- <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> -->
+      {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+               <li class="nav-link navbar-brand">
+                  <a href="{% url 'profile' request.user.id%}">
+                    {% if user.profile.profile_image%}
+                      <img src="{{user.profile.profile_image.url}}" class="rounded-circle" width=50 alt="">
+                    {%else%}
+                    <img src="{% static 'images/default_profile_pic.png' %}" class="rounded-circle" width=50 alt="">  
+                    {%endif%}
+                  </a>
+               </li>
+            </ul>
+      {%endif%}
+
+    </div>
+  </div>
+  </nav>

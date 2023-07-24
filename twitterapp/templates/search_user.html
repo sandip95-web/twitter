@@ -1,0 +1,57 @@
+{% extends 'base.html'%}
+{% load static %}
+{%block content%}
+        <h1 class="text-light">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        Search User</h1>
+       <br>       
+       <form method="POST" action="" class="bg-white text-dark p-3 rounded" enctype="multipart/form-data">
+        {%csrf_token%}
+        <input type="input" name="search_user" class="form-control border-2 border-primary" id="exampleInputPassword1">
+        <br>
+        <button type="submit" class="btn btn-primary">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        Search</button>
+       </form>
+      <br><br>
+      {% if search%}
+      <h3 class="text-light">You search for "{{search}}"</h3>
+      {% endif%}
+      <br><br>
+      {% if searched %}
+      {% for result in searched%}
+          <div class="card mb-3 m-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                {% if result.profile.profile_image %}
+                <img src="{{result.profile.profile_image.url}}" class="img-fluid rounded-start" alt="Profile Image">
+                {% else %}
+                <img src="{% static 'images/default_profile_pic.png' %}" class="img-fluid rounded-start" alt="Profile Image">
+                {%endif%}
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><i class="fa-regular fa-face-smile"></i> {{result.profile.user.username}}
+                   </h5>
+                  
+                  <a href="{% url 'profile' result.profile.user.id %}">
+                  <p class="card-text"><i class="fa-solid fa-link"></i>@{{result.profile.user.username|lower}}</p>
+                  </a>
+                  <p class="card-text"><small class="text-muted"><i class="fa-solid fa-hourglass"></i> {{result.profile.date_modified}}</small></p>
+                </div>
+        
+                 
+              </div>
+            </div>
+          </div>
+         
+           <br>
+       {%endfor%}   
+      {% else %}
+        {% if searched == None %}
+         
+        {% else %}
+         <p class="text-light">That User does not exist, please try again...</p> 
+        {% endif %}
+     {%endif%}
+{%endblock%}
